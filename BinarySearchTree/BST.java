@@ -45,4 +45,27 @@ public class BST<E extends Comparable<E>> {
 
         return root;
     }
+
+    // Search for a given key
+    public E find(E key) {
+        return findHelp(this.root, key);
+    }
+
+    public E findHelp(BSTNode<E> root, E key) {
+        // Key not found
+        if (root == null) {
+            return null;
+        }
+        if (root.value().compareTo(key) > 0) {
+            // If the key is less than the root value, we proceed left.
+            return findHelp(root.leftChild(), key);
+        } else if (root.value().compareTo(key) == 0) {
+            // Key found
+            return root.value();
+        } else {
+            // If the key is greater than the root value, we proceed right.
+            return findHelp(root.rightChild(), key);
+        }
+    }
+
 }
