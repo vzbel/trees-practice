@@ -106,4 +106,14 @@ public class BST<E extends Comparable<E>> {
         return root;
     }
 
+    // Get the maximum value in the tree.
+    public BSTNode<E> getMax(BSTNode<E> root) {
+        // Reach the maximum value.
+        if (root.rightChild() == null) {
+            return root;
+        }
+        // Proceed right towards larger values.
+        return getMax(root.rightChild());
+    }
+
 }
