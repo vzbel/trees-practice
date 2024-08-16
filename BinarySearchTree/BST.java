@@ -68,6 +68,27 @@ public class BST<E extends Comparable<E>> {
         }
     }
 
+    public int size() {
+        return this.nodeCount;
+    }
+
+    public void print() {
+        printHelp(this.root);
+    }
+
+    public void printHelp(BSTNode<E> root) {
+        // If reached null, print nothing.
+        if (root == null) {
+            return;
+        }
+        // Visit the left subtree
+        printHelp(root.leftChild());
+        // Visit node
+        System.out.print(root.value() + " ");
+        // Visit the right subtree
+        printHelp(root.rightChild());
+    }
+
     public void deleteMax() {
         this.root = deleteMaxHelp(this.root);
         this.nodeCount--;
