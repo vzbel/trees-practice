@@ -68,4 +68,21 @@ public class BST<E extends Comparable<E>> {
         }
     }
 
+    public void deleteMax() {
+        this.root = deleteMaxHelp(this.root);
+        this.nodeCount--;
+    }
+
+    // Delete the maximum value in the tree.
+    public BSTNode<E> deleteMaxHelp(BSTNode<E> root) {
+        // If the root has no right children, it is the max.
+        if (root.rightChild() == null) {
+            return root.leftChild();
+        }
+        // Otherwise proceed right.
+        root.setRightChild(deleteMaxHelp(root.rightChild()));
+        // If a root node isn't the max node, then return the root.
+        return root;
+    }
+
 }
