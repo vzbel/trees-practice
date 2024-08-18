@@ -116,4 +116,48 @@ public class BST<E extends Comparable<E>> {
         return getMax(root.rightChild());
     }
 
+    // Remove a record from the tree.
+    // Return the value removed from the tree.
+    public E remove(E key) {
+        // First find the value
+        E temp = find(key);
+        // Proceed if the value isn't null
+        if (temp != null) {
+            // Remove the node
+            this.root = removeHelp(this.root, key);
+            this.nodeCount--;
+        }
+        return temp;
+    }
+
+    public BSTNode<E> removeHelp(BSTNode<E> root, E key) {
+        // Empty subtree
+        if (root == null) {
+            return null;
+        } else if (root.value().compareTo(key) > 0) {
+            // Move to left subtree
+            root.setLeftChild(removeHelp(root.leftChild(), key));
+        } else if (root.value().compareTo(key) < 0) {
+            // Move to right subtree
+            root.setRightChild(removeHelp(root.rightChild(), key));
+        } else {
+            // Found the node. We must find the heir.
+            // First, either it has no left child or no children at all.
+            if (root.leftChild() == null) {
+                return root.rightChild();
+            } else if (root.rightChild() == null) { // Or, it has no right child.
+                return root.leftChild();
+            } else { // Otherwise, it has two children.
+                // Get the largest node in the left subtree.
+                BSTNode<E> temp = getMax(root.leftChild());
+                // Replace the removed node's value with temp.
+                root.setValue(temp.value());
+                // Remove the temp value from the left subtree.
+                // Adjust the root's left child accordingly.
+                root.setLeftChild(deleteMaxHelp(root.leftChild()));
+            }
+        }
+        // Return the root
+        return root;
+    }
 }
